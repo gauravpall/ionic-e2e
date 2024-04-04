@@ -1,4 +1,4 @@
-# Ionic E2E Example
+# Ionic Example
 
 This example app demonstrates how to build web and native end-to-end (E2E) tests with Ionic and Cordova or Capacitor. This example uses popular tools like [WebdriverIO](https://webdriver.io) and [Appium](https://appium.io) to enable cross-platform tests for iOS, Android, Web, and more.
 
