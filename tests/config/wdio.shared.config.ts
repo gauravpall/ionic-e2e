@@ -1,3 +1,4 @@
+import  AllureReporter  from '@wdio/allure-reporter';
 /**
  * All not needed configurations, for this boilerplate, are removed.
  * If you want to know which configuration options you have then you can
@@ -34,7 +35,7 @@ export const config: WebdriverIO.Config = {
   // Specify Test Files
   // ==================
   //
-  specs: ['./tests/**/*.spec.ts'],
+ specs: ['./tests/**/*.spec.ts'],
   //
   // ============
   // Capabilities
@@ -70,71 +71,29 @@ export const config: WebdriverIO.Config = {
   // bail (default is 0 - don't bail, run all tests).
   bail: 0,
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
-  // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
-  // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
-  // gets prepended directly.
-  // baseUrl: 'https://localhost',
-  // Default timeout for all waitFor* commands.
-  /**
-   * NOTE: This has been increased for more stable Appium Native app
-   * tests because they can take a bit longer.
-   */
+
   waitforTimeout: 45000,
   // Default timeout in milliseconds for request
   // if browser driver or grid doesn't send response
   connectionRetryTimeout: 120000,
   // Default request retries count
   connectionRetryCount: 3,
-  // Test runner services
-  // Services take over a specific job you don't want to take care of. They enhance
-  // your test setup with almost no effort. Unlike plugins, they don't add new
-  // commands. Instead, they hook themselves up into the test process.
-  //
-  // Services are empty here but will be defined in the
-  // - wdio.shared.appium.config.ts
-  // - wdio.web.config.ts
-  // configuration files
   services: [],
-  // Framework you want to run your specs with.
-  // The following are supported: Mocha, Jasmine, and Cucumber
-  // see also: https://webdriver.io/docs/frameworks
-  //
-  // Make sure you have the wdio adapter package for the specific framework installed
-  // before running any tests.
   framework: 'mocha',
-  // The number of times to retry the entire specfile when it fails as a whole
-  // specFileRetries: 1,
-  //
-  // Delay in seconds between the spec file retry attempts
-  // specFileRetriesDelay: 0,
-  //
-  // Whether or not retried specfiles should be retried immediately or deferred to the end of the queue
-  // specFileRetriesDeferred: false,
-  //
-  // Test reporter for stdout.
-  // The only one supported by default is 'dot'
-  // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ['spec'],
-  // Options to be passed to Jasmine.
+
+  reporters: [['allure', {
+    outputDir: 'allure-results',
+    disableWebdriverStepsReporting: true,
+    disableWebdriverScreenshotsReporting: false,
+}]],
+
   mochaOpts: {
-    // Jasmine default timeout
-    /**
-     * NOTE: This has been increased for more stable Appium Native app
-     * tests because they can take a bit longer.
-     */
     timeout: 1200000,
   },
 
-  //
-  // =====
-  // Hooks
-  // =====
-  // WebdriverIO provides several hooks you can use to interfere with the test process in order to enhance
-  // it and to build services around it. You can either apply a single function or an array of
-  // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got
-  // resolved to continue.
-  //
-  /**
-   * NOTE: No Hooks are used in this project, but feel free to add them if you need them.
-   */
+  afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+      const screenshotPath = `./allure-results/${test.title}.png`;
+      await browser.saveScreenshot(screenshotPath);
+      await AllureReporter.addAttachment('Screenshot', Buffer.from(screenshotPath, 'base64'), 'image/png');
+  }
 };

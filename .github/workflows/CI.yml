@@ -24,6 +24,15 @@ jobs:
       - name: Run E2E Tests
         run: SERVE_PORT=4200 npm run ionic-e2e:run:web
 
+      - name: Generate Report
+        run: npm run generate:report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
+
       - name: Build Project
         run: npm run build -- --prod --base-href="ionic-e2e"
 
