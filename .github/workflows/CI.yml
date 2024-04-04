@@ -82,7 +82,7 @@ jobs:
         run: npm install --force
 
       - name: Build Android
-        run: npm run build-android
+        run: ionic-e2e:build:android
 
   test-web:
     name: Test Web App
@@ -130,4 +130,4 @@ jobs:
         run: npm run start-emulator
 
       - name: Run E2E Tests for Android
-        run: npm run ionic-e2e:run:android
+        run: ionic-e2e:run:android
