@@ -82,7 +82,7 @@ jobs:
         run: npm install --force
 
       - name: Build Android App
-        run: npm run ionic-e2e:build:Android
+        run: npm run ionic-e2e:build:android
         # Make sure your build script is correctly set up to use ANDROID_SDK_ROOT
         env:
           ANDROID_SDK_ROOT: ${{ secrets.ANDROID_SDK_ROOT }}
