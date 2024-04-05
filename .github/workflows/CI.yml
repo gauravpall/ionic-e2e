@@ -92,7 +92,7 @@ jobs:
           npm install -g cordova
 
       - name: Build Android App
-        run: npm run ionic-e2e:build:Android
+        run: npm run ionic-e2e:build:android
         env:
           ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
