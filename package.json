@@ -18,7 +18,8 @@
     "ionic-e2e:run:web": "TS_NODE_PROJECT=tests/tsconfig.json  wdio tests/config/wdio.web.config.ts",
     "ionic-e2e:run:ios": "TS_NODE_PROJECT=tests/tsconfig.json  wdio tests/config/wdio.ios.config.ts",
     "ionic-e2e:run:android": "TS_NODE_PROJECT=tests/tsconfig.json  wdio tests/config/wdio.android.config.ts",
-    "generate:report": "npx allure generate allure-results/ --clean"
+    "generate:report": "npx allure generate allure-results/ --clean",
+    "install": "npm install --force"
   },
   "repository": {
     "type": "git",
