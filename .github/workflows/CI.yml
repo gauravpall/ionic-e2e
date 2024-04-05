@@ -79,7 +79,10 @@ jobs:
         uses: android-actions/setup-android@v2
 
       - name: Install Dependencies
-        run: npm install --force
+        run: |
+          npm install --force
+          npm install -g @ionic/cli
+
 
       - name: Build Android App
         run: npm run ionic-e2e:build:android
@@ -102,6 +105,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm install --force
+        
       
       - name: Start Server
         run: npm start & npx wait-on --timeout 120000 http://localhost:4200/
