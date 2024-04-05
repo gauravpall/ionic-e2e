@@ -78,18 +78,23 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
 
-      - name: Install Dependencies
+      - name: Print Android Environment Info
+        run: |
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          ls -l $ANDROID_HOME
+          ls -l $ANDROID_SDK_ROOT
+
+      - name: Install Dependencies and Global CLI Tools
         run: |
           npm install --force
           npm install -g @ionic/cli
           npm install -g cordova
 
-
       - name: Build Android App
-        run: npm run ionic-e2e:build:android
-        # Make sure your build script is correctly set up to use ANDROID_SDK_ROOT
+        run: npm run ionic-e2e:build:Android
         env:
-          ANDROID_SDK_ROOT: ${{ secrets.ANDROID_SDK_ROOT }}
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
 
   build-and-test:
     name: Build and Test for Web
