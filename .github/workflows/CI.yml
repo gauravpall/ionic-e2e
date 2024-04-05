@@ -68,7 +68,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20'
-          
+
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
@@ -82,8 +82,8 @@ jobs:
         run: |
           echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
           echo "ANDROID_HOME=$ANDROID_HOME"
-          ls -l $ANDROID_HOME
-          ls -l $ANDROID_SDK_ROOT
+          ls -l $ANDROID_HOME || true
+          ls -l $ANDROID_SDK_ROOT || true
 
       - name: Install Dependencies and Global CLI Tools
         run: |
@@ -91,10 +91,16 @@ jobs:
           npm install -g @ionic/cli
           npm install -g cordova
 
+      - name: Install Android SDK Platforms and Tools
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-30" "build-tools;30.0.3"
+
       - name: Build Android App
         run: npm run ionic-e2e:build:android
         env:
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+
 
   build-and-test:
     name: Build and Test for Web
